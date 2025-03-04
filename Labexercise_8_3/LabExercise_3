@@ -1,0 +1,44 @@
+CREATE DATABASE myBlog;
+
+use myBlog;
+
+CREATE TABLE users (id INT NOT NULL AUTO_INCREMENT, firstName VARCHAR(50) NOT NULL, lastName VARCHAR(50)
+NOT NULL, emailId VARCHAR(100) NOT NULL, password VARCHAR(50) NOT NULL, createdAt DATETIME, updatedAt
+DATETIME, PRIMARY KEY(id));
+
+CREATE TABLE posts (id INT NOT NULL AUTO_INCREMENT, title VARCHAR(50) NOT NULL, description VARCHAR(255)
+NOT NULL, image VARCHAR(255) NOT NULL, userId INT NOT NULL, likes INT NOT NULL, createdAt DATETIME, updatedAt
+DATETIME, PRIMARY KEY(id), FOREIGN KEY(userId) REFERENCES users(id));
+
+CREATE TABLE comments (id INT NOT NULL AUTO_INCREMENT, userId INT NOT NULL, postId INT NOT NULL, comment
+VARCHAR(255) NOT NULL, createdAt DATETIME, updatedAt DATETIME, PRIMARY KEY(id), FOREIGN KEY(userId)
+REFERENCES users(id), FOREIGN KEY(postId) REFERENCES posts(id));
+
+SHOW TABLES;
+
+insert into users values (1, 'John', 'Doe', 'john@user.com', '123456', Now(), Now());
+
+insert into users values (2, 'Nathan', 'Banks', 'nathan@user.com', '123456', Now(), Now());
+
+SELECT * FROM users;
+
+INSERT INTO posts VALUES (1, 'My first post', 'This is post #1', 'https://robohash.org/post1', 1, 0, NOW(),
+NOW());
+
+
+INSERT INTO posts VALUES (2, 'My second post', 'This is post #2', 'https://robohash.org/post2', 2, 0,
+NOW(), NOW());
+
+SELECT * FROM posts WHERE userId = 1;
+
+UPDATE posts SET likes = 6 WHERE id = 1;
+
+UPDATE posts SET likes = 50 WHERE id = 2;
+
+SELECT * FROM posts;
+
+INSERT INTO comments VALUES (1, 1, 1, 'This is my first comment', NOW(), NOW());
+
+INSERT INTO comments VALUES (2, 2, 2, 'Can anyone play any sports', NOW(), NOW());
+
+SELECT * FROM comments WHERE postId = 1;
